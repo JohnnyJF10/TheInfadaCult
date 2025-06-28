@@ -13,34 +13,39 @@ static uchar jungle_fish_ranges[1][3] =
 	{ 8, 20, 3 }
 };
 
-static uchar temple_fish_ranges[3][3] =
+static uchar temple_fish_ranges[8][3] =
 {
-	{ 4, 4, 2 },
-	{ 4, 16, 2 },
-	{ 4, 28, 3 }
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 }
 };
 
 static uchar quadchase_fish_ranges[8][3] =
 {
-	{ 4, 12, 1 },
-	{ 0, 12, 2 },
-	{ 8, 4, 2 },
-	{ 4, 8, 1 },
-	{ 4, 16, 2 },
-	{ 4, 24, 1 },
-	{ 12, 4, 1 },
-	{ 16, 4, 1 }
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 }
 };
 
 static uchar house_fish_ranges[7][3]
 {
-	{ 4, 4, 1 },
-	{ 16, 8, 2 },
-	{ 24, 8, 2 },
-	{ 8, 16, 2 },
-	{ 8, 12, 1 },
-	{ 20, 8, 2 },
-	{ 16, 8, 1 }
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 },
+	{ 3, 3, 3 }
 };
 
 static uchar shore_fish_ranges[3][3] =
@@ -74,9 +79,12 @@ void SetupShoal(long shoal_number)
 
 	if (CurrentLevel == LV_JUNGLE)
 	{
-		leader->Xrange = (jungle_fish_ranges[shoal_number][0] + 2) << 8;
-		leader->Yrange = jungle_fish_ranges[shoal_number][2] << 8;
-		leader->Zrange = (jungle_fish_ranges[shoal_number][1] + 2) << 8;
+		//leader->Xrange = (jungle_fish_ranges[shoal_number][0] + 2) << 8;
+		//leader->Yrange = jungle_fish_ranges[shoal_number][2] << 8;
+		//leader->Zrange = (jungle_fish_ranges[shoal_number][1] + 2) << 8;
+		leader->Xrange = (house_fish_ranges[shoal_number][0] + 2) << 8;
+		leader->Yrange = house_fish_ranges[shoal_number][2] << 8;
+		leader->Zrange = (house_fish_ranges[shoal_number][1] + 2) << 8;
 	}
 	else if (CurrentLevel == LV_TEMPLE)
 	{
@@ -89,6 +97,12 @@ void SetupShoal(long shoal_number)
 		leader->Xrange = (quadchase_fish_ranges[shoal_number][0] + 2) << 8;
 		leader->Yrange = quadchase_fish_ranges[shoal_number][2] << 8;
 		leader->Zrange = (quadchase_fish_ranges[shoal_number][1] + 2) << 8;
+	}
+	else if (CurrentLevel == LV_INDIABOSS)
+	{
+		leader->Xrange = (temple_fish_ranges[shoal_number][0] + 2) << 8;
+		leader->Yrange = temple_fish_ranges[shoal_number][2] << 8;
+		leader->Zrange = (temple_fish_ranges[shoal_number][1] + 2) << 8;
 	}
 	else if (CurrentLevel == LV_GYM)
 	{

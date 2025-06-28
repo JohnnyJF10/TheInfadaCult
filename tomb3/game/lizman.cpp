@@ -13,6 +13,7 @@
 #include "triboss.h"
 #include "control.h"
 #include "lara.h"
+#include "gameflow.h"
 
 static BITE_INFO lizman_bite_hit = { 0, -120, 120, 10 };
 static BITE_INFO lizman_swipe_hit = { 0, 0, 0, 5 };
@@ -31,6 +32,23 @@ static void TriggerLizmanGas(long x, long y, long z, long xv, long yv, long zv, 
 	sptr->dR = 0;
 	sptr->dG = (GetRandomControl() & 0xF) + 32;
 	sptr->dB = 0;
+
+	if (CurrentLevel == LV_TEMPLE)
+	{
+		sptr->sB = (GetRandomControl() & 0x3F) + 128;
+		sptr->sG = 32;
+		sptr->dB = (GetRandomControl() & 0xF) + 32;
+		sptr->dG = 0;
+	}
+	else if (CurrentLevel == LV_QUADBIKE)
+	{
+		sptr->sR = (GetRandomControl() & 0x3F) + 128;
+		sptr->sG = 32;
+		sptr->sB = 0;
+		sptr->dR = (GetRandomControl() & 0xF) + 32;
+		sptr->dG = 0;
+		sptr->dB = 0;
+	}
 
 	if (xv || yv || zv)
 	{

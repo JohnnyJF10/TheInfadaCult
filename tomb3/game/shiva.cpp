@@ -264,6 +264,25 @@ void ShivaControl(short item_number)
 
 			shiva->maximum_turn = 728;
 
+			if ((lara_item->current_anim_state >= AS_CLIMBSTNC && lara_item->current_anim_state <= AS_CLIMBDOWN ||
+				lara_item->current_anim_state == AS_HANG) && lara_item->room_number == item->room_number)
+			{
+				lara.torso_x_rot = 0;
+				lara.torso_y_rot = 0;
+				lara.head_x_rot = 0;
+				lara.head_y_rot = 0;
+				lara_item->anim_number = ANIM_FALLDOWN;
+				lara_item->frame_number = anims[ANIM_FALLDOWN].frame_base;
+				lara_item->current_anim_state = AS_FORWARDJUMP;
+				lara_item->goal_anim_state = AS_FORWARDJUMP;
+				lara_item->pos.x_pos += -50 * phd_sin(lara_item->pos.y_rot) >> W2V_SHIFT;
+				lara_item->gravity_status = 1;
+				lara_item->speed = 2;
+				lara_item->fallspeed = 1;
+			}
+
+
+
 			if (shiva->mood == ESCAPE_MOOD)
 				item->goal_anim_state = SHIVA_WAIT;
 			else if (shiva->mood == BORED_MOOD)

@@ -182,6 +182,11 @@ void LaraAboveWater(ITEM_INFO* item, COLL_INFO* coll)
 			if (MineCartControl())
 				return;
 		}
+		else if (vehicle == BOAT)
+		{
+			LaraBaddieCollision(item, coll);
+			return;
+		}
 		else
 		{
 			LaraGun();
@@ -1231,10 +1236,7 @@ void lara_col_crawl2hang(ITEM_INFO* item, COLL_INFO* coll)
 	GetCollisionInfo(coll, item->pos.x_pos, item->pos.y_pos, item->pos.z_pos, item->room_number, 870);
 	edge_catch = LaraTestEdgeCatch(item, coll, &edge);
 
-	if (!edge_catch)
-		return;
-
-	if (edge_catch < 0 && !LaraTestHangOnClimbWall(item, coll))
+	if (edge_catch <= 0 && !LaraTestHangOnClimbWall(item, coll))
 		return;
 
 	angle = item->pos.y_rot;

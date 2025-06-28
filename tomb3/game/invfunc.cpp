@@ -88,7 +88,7 @@ ulong inv_colours[17] =
 };
 
 short gLevelSecrets[21] = { 0, 3, 3, 3, 3, 3, 0, 3, 1, 5, 5, 6, 1, 3, 2, 3, 3, 3, 3, 0, 0 };
-short LevelSecrets[21] = { 0, 6, 4, 5, 0, 3, 3, 3, 1, 5, 5, 6, 1, 3, 2, 3, 3, 3, 3, 0, 0 };
+short LevelSecrets[21] = { 0, 3, 3, 3, 3, 0, 3, 3, 1, 5, 5, 6, 1, 3, 2, 3, 3, 3, 3, 0, 0 };
 
 ulong RequesterFlags1[24];
 ulong RequesterFlags2[24];

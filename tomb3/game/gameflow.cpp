@@ -771,6 +771,13 @@ long GF_InterpretSequence(short* ptr, long type, long seq_type)
 				if (level == -1)
 					return EXIT_TO_TITLE;
 
+				if (CurrentLevel == LV_INDIABOSS) 
+				{
+					DisplayCredits();
+					GameStats(CurrentLevel, type);
+				    return EXIT_TO_TITLE;
+				}
+
 				if (level)
 				{
 					Display_Inventory(INV_LEVELSELECT_MODE);

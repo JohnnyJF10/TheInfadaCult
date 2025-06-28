@@ -624,7 +624,8 @@ void TonyBossControl(short item_number)
 			x = item->pos.x_pos - lara_item->pos.x_pos;
 			z = item->pos.z_pos - lara_item->pos.z_pos;
 
-			if (SQUARE(x) + SQUARE(z) < 0x1900000)
+//			if (SQUARE(x) + SQUARE(z) < 0x1900000)
+			if (item->room_number == lara_item->room_number)
 				item->item_flags[3] = 1;
 
 			angle = 0;

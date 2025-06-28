@@ -11,6 +11,7 @@
 #include "items.h"
 #include "sphere.h"
 #include "camera.h"
+#include "gameflow.h"
 
 BOX_INFO* boxes;
 long number_boxes;
@@ -316,6 +317,9 @@ void TargetBox(LOT_INFO* LOT, short box_number)
 
 long EscapeBox(ITEM_INFO* item, ITEM_INFO* enemy, short box_number)
 {
+	if (enemy == nullptr && CurrentLevel == LV_QUADBIKE)
+		return 0;
+
 	BOX_INFO* box;
 	long x, z;
 

@@ -1161,7 +1161,8 @@ void DrawRooms(short current_room)
 		if (tomb3.gold)
 			fx = CurrentLevel == LV_JUNGLE || CurrentLevel == LV_ROOFTOPS;
 		else
-			fx = GF_Rain != 0;
+			//fx = GF_Rain != 0;
+			fx = CurrentLevel == LV_JUNGLE;
 
 		if (fx)
 			DoRain();

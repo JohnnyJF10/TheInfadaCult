@@ -490,21 +490,26 @@ void ControlSpikeWall(short item_number)
 		floor = GetFloor(x, y, z, &room_number);
 		h = GetHeight(floor, x, y, z);
 
-		if (item->pos.y_pos == h)
+//		if (item->pos.y_pos == h)
+		if (item->status != ITEM_DEACTIVATED)
 		{
 			item->pos.x_pos = x;
 			item->pos.z_pos = z;
 
-			if (item->room_number != room_number)
-				ItemNewRoom(item_number, room_number);
+			if (item->room_number != room_number || h < -32511l)
+				//ItemNewRoom(item_number, room_number);
+			{
+				item->status = ITEM_DEACTIVATED;
+				StopSoundEffect(SFX_ROLLING_BALL);
+			}
 
 			SoundEffect(SFX_ROLLING_BALL, &item->pos, SFX_DEFAULT);
 		}
-		else
-		{
-			item->status = ITEM_DEACTIVATED;
-			StopSoundEffect(SFX_ROLLING_BALL);
-		}
+		//else
+		//{
+		//	item->status = ITEM_DEACTIVATED;
+		//	StopSoundEffect(SFX_ROLLING_BALL);
+		//}
 	}
 
 	if (item->touch_bits)
@@ -1595,6 +1600,6 @@ void RollingBallCollision(short item_number, ITEM_INFO* l, COLL_INFO* coll)
 			}
 		}
 	}
-	else if (item->status != ITEM_INVISIBLE)
+	else if (item->active != ITEM_INVISIBLE)
 		ObjectCollision(item_number, l, coll);
 }

@@ -284,7 +284,7 @@ static long CanGetOff(long lr)
 	if (h - item->pos.y_pos >= -512 && height_type != BIG_SLOPE && height_type != DIAGONAL && c - item->pos.y_pos <= -762 && h - c >= 762)
 		return 1;
 
-	return 0;
+	return 1;
 }
 
 static void BoatAnimation(ITEM_INFO* item, long collide)
@@ -332,9 +332,21 @@ static void BoatAnimation(ITEM_INFO* item, long collide)
 			if (input & IN_ROLL && !item->speed)
 			{
 				if (input & (IN_RSTEP | IN_RIGHT) && CanGetOff(item->pos.y_rot + 0x4000))
+				{
 					lara_item->goal_anim_state = BOAT_JUMPR;
+					boat->left_fallspeed = -1;
+					boat->right_fallspeed = -1;
+					boat->tilt_angle = -0;
+					boat->pitch = 0;
+				}
 				else if (input & (IN_LSTEP | IN_LEFT) && CanGetOff(item->pos.y_rot - 0x4000))
+				{
 					lara_item->goal_anim_state = BOAT_JUMPL;
+					boat->left_fallspeed = -1;
+					boat->right_fallspeed = -1;
+					boat->tilt_angle = -0;
+					boat->pitch = 0;
+				}
 			}
 
 			if (item->speed > 0)
@@ -651,16 +663,22 @@ static long BoatDynamics(short item_number)
 	if (!slip && item->pos.z_rot)
 		slip = item->pos.z_rot <= 0 ? -1 : 1;
 
-	item->pos.x_pos += (slip * phd_cos(item->pos.y_rot)) >> W2V_SHIFT;
-	item->pos.z_pos -= (slip * phd_sin(item->pos.y_rot)) >> W2V_SHIFT;
+	if (item->speed || slip > 0)
+	{
+		item->pos.x_pos += (slip * phd_cos(item->pos.y_rot)) >> W2V_SHIFT;
+		item->pos.z_pos -= (slip * phd_sin(item->pos.y_rot)) >> W2V_SHIFT;
+	}
 
 	slip = (10 * phd_sin(item->pos.x_rot)) >> W2V_SHIFT;
 
 	if (!slip && item->pos.x_rot)
 		slip = item->pos.x_rot <= 0 ? -1 : 1;
 
-	item->pos.x_pos -= (slip * phd_sin(item->pos.y_rot)) >> W2V_SHIFT;
-	item->pos.z_pos -= (slip * phd_cos(item->pos.y_rot)) >> W2V_SHIFT;
+	if (item->speed || slip > 0)
+	{
+		item->pos.x_pos -= (slip * phd_sin(item->pos.y_rot)) >> W2V_SHIFT;
+		item->pos.z_pos -= (slip * phd_cos(item->pos.y_rot)) >> W2V_SHIFT;
+	}
 
 	newPos.x = item->pos.x_pos;
 	newPos.z = item->pos.z_pos;
@@ -946,6 +964,12 @@ void BoatControl(short item_number)
 
 	item = &items[item_number];
 	boat = (BOAT_INFO*)item->data;
+
+	//if (lara.skidoo != item_number && !item->speed)
+	//{
+	//	return;
+	//}
+
 	no_turn = 1;
 	driving = 0;
 	hitWall = BoatDynamics(item_number);
@@ -1018,10 +1042,10 @@ void BoatControl(short item_number)
 	item->pos.x_rot += (x_rot - item->pos.x_rot) >> 1;
 	item->pos.z_rot += (z_rot - item->pos.z_rot) >> 1;
 
-	if (!x_rot && abs(item->pos.x_rot) < 4)
+	if (!x_rot && abs(item->pos.x_rot) < 5)
 		item->pos.x_rot = 0;
 
-	if (!z_rot && abs(item->pos.z_rot) < 4)
+	if (!z_rot && abs(item->pos.z_rot) < 22)
 		item->pos.z_rot = 0;
 
 	if (lara.skidoo == item_number)

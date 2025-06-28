@@ -73,7 +73,7 @@ void PickUpCollision(short item_num, ITEM_INFO* l, COLL_INFO* coll)
 					if (item->object_number == ICON_PICKUP1_ITEM || item->object_number == ICON_PICKUP2_ITEM ||
 						item->object_number == ICON_PICKUP3_ITEM || item->object_number == ICON_PICKUP4_ITEM)
 					{
-						if (CurrentLevel == LV_CHAMBER)
+						if (CurrentLevel == LV_CHAMBER || CurrentLevel == LV_TEMPLE || CurrentLevel == LV_INDIABOSS)
 							KillItem(item_num);
 						else
 							level_complete = 1;
